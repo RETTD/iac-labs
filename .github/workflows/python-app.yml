@@ -74,7 +74,7 @@ jobs:
     defaults: 
       run:
         working-directory: ./example-app
-    needs: lint
+    needs: build
     concurrency:
       group: Poetry
     steps:
@@ -103,7 +103,7 @@ jobs:
     defaults: 
       run:
         working-directory: ./example-app
-    needs: formatter
+    needs: build
     concurrency:
       group: Poetry
     steps:
@@ -132,7 +132,7 @@ jobs:
     defaults: 
       run:
         working-directory: ./example-app
-    needs: [security, lint, formatter]
+    needs: [lint, formatter, security]
     
     steps:
     - uses: actions/checkout@v4
