@@ -46,8 +46,6 @@ jobs:
       run:
         working-directory: ./example-app
     needs: build
-    concurrency:
-      group: Poetry
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.11
@@ -75,8 +73,6 @@ jobs:
       run:
         working-directory: ./example-app
     needs: build
-    concurrency:
-      group: Poetry
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.11
@@ -104,8 +100,6 @@ jobs:
       run:
         working-directory: ./example-app
     needs: build
-    concurrency:
-      group: Poetry
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.11
