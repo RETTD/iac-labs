@@ -35,6 +35,11 @@ jobs:
       uses: snok/install-poetry@v1.3.4
     - name: Install deps Poetry
       run: poetry install --no-root
+    # - name: Save Cache
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: ~/.venv
+    #     key: Linux-venv-${{ runner.os }}-${{ hashFiles('**/requirements.txt') }}
 
   lint:
     runs-on: ubuntu-latest
@@ -63,7 +68,7 @@ jobs:
       id: cached-poetry-dependencies
       uses: actions/cache@v3
       with:
-        path: /home/runner/work/<path>/example-app/.venv
+        path: /home/runner/work/iac-labs/iac-labs/example-app/.venv
         key: ${{ runner.os }}-venv 
     - name: Check is Poetry installed
       run: |
@@ -149,7 +154,7 @@ jobs:
     defaults: 
       run:
         working-directory: ./example-app
-    needs: security
+    needs: [security, lint, formatter]
     
     steps:
     - uses: actions/checkout@v4
