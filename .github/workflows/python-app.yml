@@ -35,15 +35,6 @@ jobs:
       uses: snok/install-poetry@v1.3.4
     - name: Install deps Poetry
       run: poetry install --no-root
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
-      run: |
-        pytest
         
   build-windows:
     runs-on: windows-latest
@@ -67,23 +58,34 @@ jobs:
       uses: snok/install-poetry@v1.3.4
     - name: Install deps Poetry
       run: poetry install --no-root
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
-      run: |
-        pytest
   lint:
     runs-on: ubuntu-latest
     defaults: 
       run:
         working-directory: ./example-app
-
+    concurrency:
+      group: Poetry group
     steps:
     - uses: actions/checkout@v4
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Install Poetry Action
+      uses: snok/install-poetry@v1.3.4
+    - name: Install deps Poetry
+      run: poetry install --no-root
+    - name: Cache build venv
+      id: cached-poetry-dependencies
+      uses: actions/cache@v3
+      with:
+        path: /home/runner/work/<path>/example-app/.venv
+        key: ${{ runner.os }}-venv 
     - name: Check is Poetry installed
       run: |
         poetry --version
@@ -96,9 +98,29 @@ jobs:
     defaults: 
       run:
         working-directory: ./example-app
-
+    concurrency:
+      group: Poetry group
     steps:
     - uses: actions/checkout@v4
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Install Poetry Action
+      uses: snok/install-poetry@v1.3.4
+    - name: Install deps Poetry
+      run: poetry install --no-root
+    - name: Cache build venv
+      id: cached-poetry-dependencies
+      uses: actions/cache@v3
+      with:
+        path: /home/runner/work/<path>/example-app/.venv
+        key: ${{ runner.os }}-venv 
     - name: Check is Poetry installed
       run: |
         poetry --version
@@ -111,9 +133,29 @@ jobs:
     defaults: 
       run:
         working-directory: ./example-app
-
+    concurrency:
+      group: Poetry group
     steps:
     - uses: actions/checkout@v4
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Install Poetry Action
+      uses: snok/install-poetry@v1.3.4
+    - name: Install deps Poetry
+      run: poetry install --no-root
+    - name: Cache build venv
+      id: cached-poetry-dependencies
+      uses: actions/cache@v3
+      with:
+        path: /home/runner/work/<path>/example-app/.venv
+        key: ${{ runner.os }}-venv      
     - name: Check is Poetry installed
       run: |
         poetry --version
@@ -129,6 +171,25 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Install Poetry Action
+      uses: snok/install-poetry@v1.3.4
+    - name: Install deps Poetry
+      run: poetry install --no-root
+    - name: Cache build venv
+      id: cached-poetry-dependencies
+      uses: actions/cache@v3
+      with:
+        path: /home/runner/work/<path>/example-app/.venv
+        key: ${{ runner.os }}-venv 
     - name: Check is Poetry installed
       run: |
         poetry --version
